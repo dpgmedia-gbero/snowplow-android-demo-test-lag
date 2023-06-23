@@ -39,16 +39,19 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
 
-        Log.d("Snowplow", Date().toString() + " Snowplow tracker starting")
-        val network = NetworkConfiguration(endpoint = "url", HttpMethod.POST)
-        val config = TrackerConfiguration(applicationContext.packageName).screenViewAutotracking(true)
-        Snowplow.createTracker(
-            context = applicationContext,
-            namespace = "namespace",
-            network = network,
-            config,
-        )
-        Log.d("Snowplow", Date().toString() + " Snowplow tracker created")
+        Thread {
+            Log.d("Snowplow", Date().toString() + " Snowplow tracker starting")
+            val network = NetworkConfiguration(endpoint = "url", HttpMethod.POST)
+            val config = TrackerConfiguration(applicationContext.packageName).screenViewAutotracking(true)
+            Snowplow.createTracker(
+                context = applicationContext,
+                namespace = "namespace",
+                network = network,
+                config,
+            )
+            Log.d("Snowplow", Date().toString() + " Snowplow tracker created")
+        }.start()
+        Thread.sleep(5000)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
