@@ -2,15 +2,15 @@ package com.example.testlagapp
 
 import android.os.Bundle
 import android.util.Log
-import com.google.android.material.snackbar.Snackbar
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
 import com.example.testlagapp.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
 import com.snowplowanalytics.snowplow.Snowplow
 import com.snowplowanalytics.snowplow.configuration.NetworkConfiguration
 import com.snowplowanalytics.snowplow.configuration.TrackerConfiguration
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         Thread {
-            Log.d("Snowplow", Date().toString() + " Snowplow tracker starting")
+            Log.e("Snowplow", Date().toString() + " Snowplow tracker starting")
             val network = NetworkConfiguration(endpoint = "url", HttpMethod.POST)
             val config = TrackerConfiguration(applicationContext.packageName).screenViewAutotracking(true)
             Snowplow.createTracker(
@@ -49,9 +49,9 @@ class MainActivity : AppCompatActivity() {
                 network = network,
                 config,
             )
-            Log.d("Snowplow", Date().toString() + " Snowplow tracker created")
+            Log.e("Snowplow", Date().toString() + " Snowplow tracker created")
         }.start()
-        Thread.sleep(5000)
+        Thread.sleep(10_000)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
